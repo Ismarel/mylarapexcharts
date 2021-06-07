@@ -1,0 +1,37 @@
+{
+    "name": "ismarel/mylarapexcharts",
+    "description": "Package to provide easy api to build apex charts modify on Laravel",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Edgar Ismael Reynoso",
+            "email": "edgar@yalla-ya.com"
+        }
+    ],
+    "require": {
+      "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "ismarel\\LarapexCharts\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ismarel\\LarapexCharts\\Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.4"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ismarel\\LarapexCharts\\LarapexChartsServiceProvider"
+            ],
+            "aliases": {
+                "LarapexChart": "ismarel\\LarapexCharts\\Facades\\LarapexChart"
+            }
+        }
+    }
+}
