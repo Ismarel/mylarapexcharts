@@ -6115,12 +6115,10 @@ const {
                 var w = this.w;
                 var x, y, yDivision, xDivision, barHeight, barWidth, zeroH, zeroW;
                 var dataPoints = w.globals.dataPoints;
-                console.log(w.globals.dataPoints);
                 if (this.barCtx.isTimelineBar) {
                     // timeline rangebar chart
                     dataPoints = w.globals.labels.length;
                 }
-                console.log(dataPoints);
                 var seriesLen = this.barCtx.seriesLen;
 
                 if (w.config.plotOptions.bar.rangeBarGroupRows) {
@@ -9550,12 +9548,6 @@ const {
                 gl.isXNumeric = false;
                 gl.dataFormatXNumeric = false;
                 this.handleExternalLabelsData(ser);
-                console.log(cnf.xaxis.type);
-                console.log(cnf.labels);
-
-                console.log("-------nuevo");
-                console.log(gl.isXNumeric);
-                console.log(gl.dataFormatXNumeric);
                 var catLabels = this.coreUtils.getCategoryLabels(gl.labels);
 
                 for (var l = 0; l < catLabels.length; l++) {
@@ -11776,7 +11768,6 @@ const {
                 for (var i = startingIndex; i < len; i++) {
                     //cambio esto gl.dataPoints = Math.max(gl.dataPoints, series[i].length);
                     gl.dataPoints = Math.max(gl.dataPoints, cseries[i].data.length);
-                    console.log(series[i].length + "---");
                     if (gl.dataPoints == 0) {
                         gl.dataPoints = Math.max(gl.dataPoints, cseries[i].data.length);
                     }
@@ -16571,7 +16562,7 @@ const {
                 }
 
                 var ttYVal = ttItems[t].querySelector('.apexcharts-tooltip-text-value');
-                
+
                 if (ttYVal) {
                     ttYVal.innerHTML = typeof val !== 'undefined' ? val : '';
                 }
@@ -16596,7 +16587,7 @@ const {
                 }
                 if (shared && ttItemsChildren[0]) {
                     // hide when no Val or series collapsed
-                    
+
                     if (typeof val === 'undefined' || val === null || w.globals.collapsedSeriesIndices.indexOf(t) > -1) {
                         ttItemsChildren[0].parentNode.style.display = 'none';
                     } else {
@@ -19399,6 +19390,7 @@ const {
                     }
                 }
                 var color = colorProps.color;
+
                 var utils = new Utils();
 
                 if (w.config.plotOptions[chartType].enableShades) {
@@ -19409,7 +19401,6 @@ const {
                         color = Utils.hexToRgba(utils.shadeColor(colorShadePercent, colorProps.color), w.config.fill.opacity);
                     }
                 }
-
                 return {
                     color: color,
                     colorProps: colorProps
@@ -19429,14 +19420,35 @@ const {
                 }
 
                 var color = w.config.seriesM[i].data[j][k]['col'];
+                var type = w.config.seriesM[i].data[j][k]['type']
+
                 if (isUndefined(color)) {
                     color = '#999999';
                 }
                 var foreColor = null;
-                var min = Math.min.apply(Math, _toConsumableArray(w.globals.series[i]));
-                var max = Math.max.apply(Math, _toConsumableArray(w.globals.series[i]));
-
-                if (!chartOpts.distributed && chartType === 'heatmap') {
+                var valarray = [];
+                var apexc = this;
+                w.globals.series.forEach(elem =>{
+                    elem.forEach(el =>{
+                        el.forEach(e => {
+                        if(Utils.isObject(e)){
+                            if(e.hasOwnProperty("type")){
+                                if(e.type == type){
+                                    valarray.push(e.tam);
+                                }
+                                
+                            }
+                        }
+                        });
+                    });
+                });
+                //var min = Math.min.apply(Math, _toConsumableArray(valarray));
+                //var max = Math.max.apply(Math, _toConsumableArray(valarray));
+                var min = Math.min(...valarray);
+                var max = Math.max(...valarray);
+                min = isFinite(min) ? min : 0;
+                max = isFinite(max) ? max : 0;
+                /*if (!chartOpts.distributed && chartType === 'heatmap') {
                     min = w.globals.minY;
                     max = w.globals.maxY;
                 }
@@ -19444,7 +19456,7 @@ const {
                 if (typeof chartOpts.colorScale.min !== 'undefined') {
                     min = chartOpts.colorScale.min < w.globals.minY ? chartOpts.colorScale.min : w.globals.minY;
                     max = chartOpts.colorScale.max > w.globals.maxY ? chartOpts.colorScale.max : w.globals.maxY;
-                }
+                } */
 
                 var total = Math.abs(max) + Math.abs(min);
                 var percent = 100 * val / (total === 0 ? total - 0.000001 : total);
@@ -19559,7 +19571,6 @@ const {
                     });
                     series[x] = data;
                 }
-                console.log(series);
                 var xDivision = w.globals.gridWidth / w.globals.dataPoints;
 
                 var yDivision = w.globals.gridHeight / w.globals.series.length;
