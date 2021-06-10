@@ -9552,6 +9552,8 @@ const {
                 this.handleExternalLabelsData(ser);
                 console.log(cnf.xaxis.type);
                 console.log(cnf.labels);
+
+                console.log("-------nuevo");
                 console.log(gl.isXNumeric);
                 console.log(gl.dataFormatXNumeric);
                 var catLabels = this.coreUtils.getCategoryLabels(gl.labels);
