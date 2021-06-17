@@ -19428,17 +19428,17 @@ const {
                 var foreColor = null;
                 var valarray = [];
                 var apexc = this;
-                w.globals.series.forEach(elem =>{
-                    elem.forEach(el =>{
+                w.globals.series.forEach(elem => {
+                    elem.forEach(el => {
                         el.forEach(e => {
-                        if(Utils.isObject(e)){
-                            if(e.hasOwnProperty("type")){
-                                if(e.type == type){
-                                    valarray.push(e.tam);
+                            if (Utils.isObject(e)) {
+                                if (e.hasOwnProperty("type")) {
+                                    if (e.type == type) {
+                                        valarray.push(e.tam);
+                                    }
+
                                 }
-                                
                             }
-                        }
                         });
                     });
                 });
@@ -30839,6 +30839,65 @@ const {
              * @param {array} series - New series which will override the existing
              */
 
+        }, {
+            key: "getOptions",
+            value: function getOptions() {
+                
+                var w = this.w;
+                var chart = {
+                    height: w.config.chart.height,
+                    toolbar:  {
+                        show: w.config.chart.toolbar.show
+                    },
+                    type: w.config.chart.type,
+                    width: w.config.chart.width,
+                    zoom: {
+                        enabled : w.config.chart.zoom.enabled
+                    }
+                };
+                var colors = w.config.colors;
+                var dataLabels = {
+                    enabled: w.config.dataLabels.enabled
+                };
+                var grid = {
+                    show: w.config.grid.show
+                };
+                var markers = {
+                    show: w.config.markers.show
+                };
+                var plotOptions = {
+                    bar: {
+                        horizontal: w.config.plotOptions.bar.horizontal
+                    }
+                };
+                var series = w.config.series;
+                var seriesM = w.config.seriesM;
+                var subtitle = {
+                    text: w.config.subtitle.text,
+                    align: w.config.subtitle.align
+                };
+                var title = {
+                    text: w.config.title.text
+                };
+                var xaxis = {
+                    categories: w.config.xaxis.categories
+                };
+                var options = {
+                    chart: chart,
+                    colors: colors,
+                    dataLabels: dataLabels,
+                    grid: grid,
+                    markers: markers,
+                    plotOptions: plotOptions,
+                    series: series,
+                    seriesM: seriesM,
+                    subtitle: subtitle,
+                    title: title,
+                    xaxis: xaxis
+                };
+
+                return options;
+            }
         }, {
             key: "updateSeries",
             value: function updateSeries() {
