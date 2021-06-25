@@ -19459,7 +19459,10 @@ const {
                 } */
 
                 var total = Math.abs(max) + Math.abs(min);
-                var percent = 100 * val / (total === 0 ? total - 0.000001 : total);
+                var per = 15;
+                var percent = (100 - per) * val / (total === 0 ? total - 0.000001 : total);
+                percent = isNaN(percent) ? 0 : percent;
+                percent = per + percent;
 
                 if (chartOpts.colorScale.ranges.length > 0) {
                     var colorRange = chartOpts.colorScale.ranges;
@@ -19474,7 +19477,6 @@ const {
                         }
                     });
                 }
-
                 return {
                     color: color,
                     foreColor: foreColor,
