@@ -35,7 +35,7 @@
         @endif
     }
 
-    var chart = new ApexCharts(document.querySelector("#{!! $chart->id() !!}"), options);
-    chart.render();
+    var {!! $chart->name() !!} = new ApexCharts(document.querySelector("#{!! $chart->id() !!}"), options);
+    {!! $chart->name() !!}.render();
 
 </script>

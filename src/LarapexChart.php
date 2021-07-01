@@ -16,6 +16,7 @@ class LarapexChart
     */
 
     public $id;
+    protected $name = 'chart';
     protected $title;
     protected $subtitle;
     protected $subtitlePosition;
@@ -242,6 +243,12 @@ class LarapexChart
         return $this;
     }
 
+    public function setName(string $name) :LarapexChart
+    {
+        $this->name = $name;
+        return $this;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Getters
@@ -425,6 +432,14 @@ class LarapexChart
     public function dataLabels()
     {
         return $this->dataLabels;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function name()
+    {
+        return $this->name;
     }
 
     /*
