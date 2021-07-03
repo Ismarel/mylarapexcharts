@@ -1132,6 +1132,7 @@ const {
             key: "drawLine",
             value: function drawLine(x1, y1, x2, y2) {
                 var lineColor = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : '#a8a8a8';
+
                 var dashArray = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 0;
                 var strokeWidth = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
                 var w = this.w;
@@ -10575,7 +10576,6 @@ const {
                 if (x1 < 0 || x1 - 2 > w.globals.gridWidth) return;
                 var y1 = this.offY + w.config.xaxis.axisTicks.offsetY;
                 var y2 = y1 + w.config.xaxis.axisTicks.height;
-
                 if (w.config.xaxis.position === 'top') {
                     y2 = y1 - w.config.xaxis.axisTicks.height;
                 }
@@ -10835,6 +10835,24 @@ const {
                             parent: parent
                         });
                     }
+                    var div = xCount / w.config.grid.column.parts;
+                    if (w.config.grid.column.parts > 1 && i % div == 0 && i > 0 && i < xCount) {
+                        var divcolor;
+                        if (this.w.config.theme.mode === 'dark') {
+                            divcolor = '#FFFFFF';
+                        } else {
+                            divcolor = '#000000';
+                        }
+                        this._drawGridLine({
+                            x1: x1,
+                            y1: y1,
+                            x2: x2,
+                            y2: y2,
+                            parent: parent,
+                            divcolor: divcolor
+                        });
+
+                    }
 
                     var xAxis = new XAxis(this.ctx);
                     xAxis.drawXaxisTicks(x1, this.elg);
@@ -10852,8 +10870,13 @@ const {
                 var isHorzLine = parent.node.classList.contains('apexcharts-gridlines-horizontal');
                 var strokeDashArray = w.config.grid.strokeDashArray;
                 var offX = w.globals.barPadForNumericAxis;
+
                 var graphics = new Graphics(this);
                 var line = graphics.drawLine(x1 - (isHorzLine ? offX : 0), y1, x2 + (isHorzLine ? offX : 0), y2, w.config.grid.borderColor, strokeDashArray);
+                
+                if (_ref2.divcolor !== undefined) {
+                    line.node.setAttribute('stroke', _ref2.divcolor);
+                }
                 line.node.classList.add('apexcharts-gridline');
                 parent.add(line);
             }
@@ -30844,17 +30867,17 @@ const {
         }, {
             key: "getOptions",
             value: function getOptions() {
-                
+
                 var w = this.w;
                 var chart = {
                     height: w.config.chart.height,
-                    toolbar:  {
+                    toolbar: {
                         show: w.config.chart.toolbar.show
                     },
                     type: w.config.chart.type,
                     width: w.config.chart.width,
                     zoom: {
-                        enabled : w.config.chart.zoom.enabled
+                        enabled: w.config.chart.zoom.enabled
                     }
                 };
                 var colors = w.config.colors;

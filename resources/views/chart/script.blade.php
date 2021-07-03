@@ -1,12 +1,21 @@
 <script>
-    var options =
-    {
+    var options = {
         chart: {
             type: '{!! $chart->type() !!}',
             height: {!! $chart->height() !!},
             width: '{!! $chart->width() !!}',
             toolbar: {!! $chart->toolbar() !!},
-            zoom: {!! $chart->zoom() !!}
+            zoom: {!! $chart->zoom() !!},
+            animations: {
+                enabled: true,
+                easing: 'swing',
+                animateGradually: {
+                    enabled: true
+                },
+                dynamicAnimation: {
+                    enabled: false
+                }
+            }
         },
         plotOptions: {
             bar: {!! $chart->horizontal() !!}
@@ -15,7 +24,7 @@
         series: {!! $chart->dataset() !!},
         seriesM: {!! $chart->datasetM() !!},
         dataLabels: {!! $chart->dataLabels() !!},
-        @if($chart->labels())
+        @if ($chart->labels())
             labels: {!! json_encode($chart->labels(), true) !!},
         @endif
         title: {
@@ -33,12 +42,11 @@
         theme: {
             mode: '{!! $chart->mode() !!}'
         },
-        @if($chart->stroke())
+        @if ($chart->stroke())
             stroke: {!! $chart->stroke() !!},
         @endif
     }
 
     var {!! $chart->name() !!} = new ApexCharts(document.querySelector("#{!! $chart->id() !!}"), options);
     {!! $chart->name() !!}.render();
-
 </script>
