@@ -30,6 +30,9 @@
         },
         grid: {!! $chart->grid() !!},
         markers: {!! $chart->markers() !!},
+        theme: {
+            mode: '{!! $chart->mode() !!}'
+        },
         @if($chart->stroke())
             stroke: {!! $chart->stroke() !!},
         @endif

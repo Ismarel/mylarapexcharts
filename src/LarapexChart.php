@@ -9,14 +9,15 @@ class LarapexChart
     | Chart
     |--------------------------------------------------------------------------
     |
-    | This class build the chart by passing setters to the object, it will 
-    | use the method container and scripts to generate a JSON  
-    | in blade views, it works also with Vue JS components  
+    | This class build the chart by passing setters to the object, it will
+    | use the method container and scripts to generate a JSON
+    | in blade views, it works also with Vue JS components
     |
-    */
+     */
 
     public $id;
     protected $name = 'chart';
+    protected $mode = 'light';
     protected $title;
     protected $subtitle;
     protected $subtitlePosition;
@@ -41,7 +42,7 @@ class LarapexChart
     |--------------------------------------------------------------------------
     | Constructors
     |--------------------------------------------------------------------------
-    */
+     */
 
     public function __construct()
     {
@@ -57,52 +58,52 @@ class LarapexChart
         return $this;
     }
 
-    public function pieChart() :PieChart
+    public function pieChart(): PieChart
     {
         return new PieChart();
     }
 
-    public function donutChart() :DonutChart
+    public function donutChart(): DonutChart
     {
         return new DonutChart();
     }
 
-    public function radialChart() :RadialChart
+    public function radialChart(): RadialChart
     {
         return new RadialChart();
     }
 
-    public function polarAreaChart() :PolarAreaChart
+    public function polarAreaChart(): PolarAreaChart
     {
         return new PolarAreaChart();
     }
 
-    public function lineChart() :LineChart
+    public function lineChart(): LineChart
     {
         return new LineChart();
     }
 
-    public function areaChart() :AreaChart
+    public function areaChart(): AreaChart
     {
         return new AreaChart();
     }
 
-    public function barChart() :BarChart
+    public function barChart(): BarChart
     {
         return new BarChart();
     }
 
-    public function horizontalBarChart() :HorizontalBar
+    public function horizontalBarChart(): HorizontalBar
     {
         return new HorizontalBar();
     }
 
-    public function heatMapChart() :HeatMapChart
+    public function heatMapChart(): HeatMapChart
     {
         return new HeatMapChart();
     }
 
-    public function radarChart() :RadarChart
+    public function radarChart(): RadarChart
     {
         return new RadarChart();
     }
@@ -111,7 +112,7 @@ class LarapexChart
     |--------------------------------------------------------------------------
     | Setters
     |--------------------------------------------------------------------------
-    */
+     */
 
     /**
      *
@@ -119,7 +120,7 @@ class LarapexChart
      * @param null $type
      * @return $this
      */
-    public function setType($type = null) :LarapexChart
+    public function setType($type = null): LarapexChart
     {
         $this->type = $type;
         return $this;
@@ -131,58 +132,58 @@ class LarapexChart
         return $this;
     }
 
-    public function setHeight(int $height) :LarapexChart
+    public function setHeight(int $height): LarapexChart
     {
         $this->height = $height;
         return $this;
     }
 
-    public function setWidth(int $width) :LarapexChart
+    public function setWidth(int $width): LarapexChart
     {
         $this->width = $width;
         return $this;
     }
 
-    public function setColors(array $colors) :LarapexChart
+    public function setColors(array $colors): LarapexChart
     {
         $this->colors = json_encode($colors);
         return $this;
     }
 
-    public function setHorizontal(bool $horizontal) :LarapexChart
+    public function setHorizontal(bool $horizontal): LarapexChart
     {
         $this->horizontal = json_encode(['horizontal' => $horizontal]);
         return $this;
     }
 
-    public function setTitle(string $title) :LarapexChart
+    public function setTitle(string $title): LarapexChart
     {
         $this->title = $title;
         return $this;
     }
 
-    public function setSubtitle(string $subtitle, string $position = 'left') :LarapexChart
+    public function setSubtitle(string $subtitle, string $position = 'left'): LarapexChart
     {
         $this->subtitle = $subtitle;
         $this->subtitlePosition = $position;
         return $this;
     }
 
-    public function setLabels(array $labels) :LarapexChart
+    public function setLabels(array $labels): LarapexChart
     {
         $this->labels = $labels;
         return $this;
     }
 
-    public function setXAxis(array $categories) :LarapexChart
+    public function setXAxis(array $categories): LarapexChart
     {
         $this->xAxis = json_encode($categories);
         return $this;
     }
 
-    public function setGrid($transparent = true, $color = '#e5e5e5', $opacity = 0.1) :LarapexChart
+    public function setGrid($transparent = true, $color = '#e5e5e5', $opacity = 0.1): LarapexChart
     {
-        if($transparent) {
+        if ($transparent) {
             $this->grid = json_encode(['show' => true]);
             return $this;
         }
@@ -190,16 +191,16 @@ class LarapexChart
         $this->grid = json_encode([
             'row' => [
                 'colors' => [$color, 'transparent'],
-                'opacity' => $opacity ? $opacity : 0.5
+                'opacity' => $opacity ? $opacity : 0.5,
             ],
         ]);
 
         return $this;
     }
 
-    public function setMarkers($colors = [], $width = 4, $hoverSize = 7) :LarapexChart
+    public function setMarkers($colors = [], $width = 4, $hoverSize = 7): LarapexChart
     {
-        if(empty($colors)) {
+        if (empty($colors)) {
             $colors = config('larapex-charts.colors');
         }
 
@@ -210,42 +211,48 @@ class LarapexChart
             'strokeWidth' => $width / 2,
             'hover' => [
                 'size' => $hoverSize,
-            ]
+            ],
         ]);
 
         return $this;
     }
 
-    public function setStroke(int $width, array $colors = []) :LarapexChart
+    public function setStroke(int $width, array $colors = []): LarapexChart
     {
-        if(empty($colors)) {
+        if (empty($colors)) {
             $colors = config('larapex-charts.colors');
         }
 
         $this->stroke = json_encode([
-            'show'    =>  true,
-            'width'   =>  $width,
-            'colors'  =>  $colors,
+            'show' => true,
+            'width' => $width,
+            'colors' => $colors,
         ]);
         return $this;
     }
 
-    public function setToolbar(bool $show, bool $zoom = true) :LarapexChart
+    public function setToolbar(bool $show, bool $zoom = true): LarapexChart
     {
         $this->toolbar = json_encode(['show' => $show]);
         $this->zoom = json_encode(['enabled' => $zoom ? $zoom : false]);
         return $this;
     }
 
-    public function setDataLabels(bool $enabled = true) :LarapexChart
+    public function setDataLabels(bool $enabled = true): LarapexChart
     {
         $this->dataLabels = json_encode(['enabled' => $enabled]);
         return $this;
     }
 
-    public function setName(string $name) :LarapexChart
+    public function setName(string $name): LarapexChart
     {
         $this->name = $name;
+        return $this;
+    }
+
+    public function setMode(string $mode): LarapexChart
+    {
+        $this->mode = $mode;
         return $this;
     }
 
@@ -253,7 +260,7 @@ class LarapexChart
     |--------------------------------------------------------------------------
     | Getters
     |--------------------------------------------------------------------------
-    */
+     */
 
     /**
      * @param array $array
@@ -261,7 +268,7 @@ class LarapexChart
      */
     public function transformLabels(array $array)
     {
-        $stringArray = array_filter($array, function($string){
+        $stringArray = array_filter($array, function ($string) {
             return "{$string}";
         });
         return json_encode(['"' . implode('","', $stringArray) . '"']);
@@ -283,7 +290,7 @@ class LarapexChart
         return View::make('larapex-charts::chart.script', ['chart' => $this]);
     }
 
-    public static function cdn() :string
+    public static function cdn(): string
     {
         return 'https://cdn.jsdelivr.net/npm/apexcharts';
     }
@@ -352,12 +359,12 @@ class LarapexChart
     /**
      * @return int
      */
-    public function height() :int
+    public function height(): int
     {
         return $this->height;
     }
 
-    public function width() :string
+    public function width(): string
     {
         return $this->width ? $this->width : '100%';
     }
@@ -442,11 +449,16 @@ class LarapexChart
         return $this->name;
     }
 
+    public function mode()
+    {
+        return $this->mode;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | JSON Helper
     |--------------------------------------------------------------------------
-    */
+     */
 
     public function toJson()
     {
@@ -466,7 +478,7 @@ class LarapexChart
             'seriesM' => json_decode($this->datasetM()),
             'dataLabels' => json_decode($this->dataLabels()),
             'title' => [
-                'text' => $this->title()
+                'text' => $this->title(),
             ],
             'subtitle' => [
                 'text' => $this->subtitle() ? $this->subtitle() : '',
@@ -479,11 +491,11 @@ class LarapexChart
             'markers' => json_decode($this->markers()),
         ];
 
-        if($this->labels()) {
+        if ($this->labels()) {
             $options['labels'] = $this->labels();
         }
 
-        if($this->stroke()) {
+        if ($this->stroke()) {
             $options['stroke'] = json_decode($this->stroke());
         }
 
@@ -493,7 +505,7 @@ class LarapexChart
         ]);
     }
 
-    public function toVue() :array
+    public function toVue(): array
     {
         $options = [
             'chart' => [
@@ -507,7 +519,7 @@ class LarapexChart
             'colors' => json_decode($this->colors()),
             'dataLabels' => json_decode($this->dataLabels()),
             'title' => [
-                'text' => $this->title()
+                'text' => $this->title(),
             ],
             'subtitle' => [
                 'text' => $this->subtitle() ? $this->subtitle() : '',
@@ -520,11 +532,11 @@ class LarapexChart
             'markers' => json_decode($this->markers()),
         ];
 
-        if($this->labels()) {
+        if ($this->labels()) {
             $options['labels'] = $this->labels();
         }
 
-        if($this->stroke()) {
+        if ($this->stroke()) {
             $options['stroke'] = json_decode($this->stroke());
         }
 
